@@ -231,15 +231,15 @@ class PRS(object):
                 self.try_deploy(new_target.ref)
             else:
                 log.info(f'not deploying target {new_target.short_str()}')
-        prs = self._get(target=new_target.ref).values()
-        if len(prs) == 0:
-            log.info(f'no PRs for target {new_target.ref.short_str()}')
-        else:
-            for pr in prs:
-                self._set(pr.source.ref,
-                          pr.target.ref,
-                          pr.update_from_github_push(new_target))
-            self.heal_target(new_target.ref)
+            prs = self._get(target=new_target.ref).values()
+            if len(prs) == 0:
+                log.info(f'no PRs for target {new_target.ref.short_str()}')
+            else:
+                for pr in prs:
+                    self._set(pr.source.ref,
+                              pr.target.ref,
+                              pr.update_from_github_push(new_target))
+                self.heal_target(new_target.ref)
 
     def pr_push(self, gh_pr):
         assert isinstance(gh_pr, GitHubPR), gh_pr
